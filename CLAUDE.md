@@ -48,14 +48,14 @@ While any Project profile section is still `TBD`, the project is not bootstrappe
 
 ## Repo Memory
 
-`.memory/` is the shared, tracked memory for all agents: context, decisions and the *why* behind rules. Read `.memory/MEMORY.md` at the start of every session.
+`.memory/` is the shared, tracked memory for all agents (the _why_ behind rules and decisions). Read `.memory/MEMORY.md` at the start of every session.
 
-- **Propose, never silently commit:** agents must never autonomously create or edit `.memory/` files. Any addition or update must be proposed as a draft to the user for explicit approval ("go" / "ok").
-- **Evidence-based only:** only store confirmed user decisions, lasting architectural choices, and permanent preferences. Never store agent hypotheses, unconfirmed assumptions, scratchpad notes, or transient discussions.
-- **The Why, not The How:** rules belong in this file (`CLAUDE.md`). `.memory/` explains the *why* and context; it must never store implementation details, code snippets, or duplicates of rules.
-- **Content standard:** one fact per file, frontmatter `name/description/metadata.type` (`user | feedback | project | reference`), and an index line in `.memory/MEMORY.md`. Update an existing file instead of duplicating it.
-- **Security & boundaries:** never store secrets, tokens, credentials, or links to transient input files (`.local/`).
-- **Pruning & ground truth:** code and official documentation (`docs/`) are ground truth over memory. If a memory conflicts with code or is obsolete, report it to the user to prune or update; never silently follow stale memory.
+- **Gate:** any create, update or delete in `.memory/` (including `MEMORY.md`) needs the user's approval of the exact draft (file name + full content, or the file to delete). A reply to another or bundled question, a general "ok", or silence is not approval.
+- **When:** only at task Close-out.
+- **Criteria:** write a memory only if all hold: confirmed by the user; still true after the task ends; not already in CLAUDE.md, `docs/`, code or git history; future agents would act differently without it. Never store assumptions, proposals, open questions, status or code.
+- **Where else:** rules → CLAUDE.md; requirements → `docs/`; phase scope/status → `docs/plans/*-summary.md`; working drafts → `<agent dir>/plans/` (local, not shared).
+- **Format:** one fact per file, frontmatter `name/description/metadata.type`, indexed in `.memory/MEMORY.md`; update an existing file instead of duplicating. Never store secrets or links to transient input files (`.local/`).
+- Rules belong in this file; `.memory/` explains them and must not copy CLAUDE.md content.
 
 ## Agent Workflow (Mandatory)
 
